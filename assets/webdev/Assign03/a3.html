@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #left {
+                float: left;
+                width: 800px;
+                height: 600px;
+                position: relative;
+                margin-right: 20px;
+            }
+            #background {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+            }
+            #grass1 {
+                position: absolute;
+                left: 0px;
+                bottom: 0px;
+            }
+            #grass2 {
+                position: absolute;
+                left: 275px;
+                bottom: 0px;
+            }
+            #grass3 {
+                position: absolute;
+                right: 0px;
+                bottom: 0px;
+            }
+            .grass:hover {
+                background-color: rgba(255, 255, 0, 0.5);
+            }
+           
+            #pokedex {
+                margin-top: 30px;
+            }
+
+            #pokedex table {
+                border-collapse: collapse;
+            }
+
+            #pokedex th {
+                background-color: #eee;
+                border: 1px solid #ccc;
+                padding: 10px;
+            }
+
+            #pokedex td {
+                border: 1px solid #ccc;
+                padding: 10px;
+                text-align: center;
+            }
+
+            #pokedex-message {
+                margin-top: 20px;
+                text-align: center;
+                font-weight: bold;
+                font-size: 18px;
+            }
+
+            #pokedex-message.complete {
+                color: green;
+            }
+
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                margin-top: 30px;
+            }
+            .histogram {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-end;
+            }
+            .histogram .bar {
+                display: inline-block;
+                height: 20px;
+                margin-right: 10px;
+            }
+
+            .bar {
+                height: 50px;
+                margin-right: 10px;
+                width: 0%;
+                transition: width 0.5s ease-in-out;
+            }
+            #pikachu-bar {
+                background-color: yellow;
+            }
+
+            #bulbasaur-bar {
+                background-color: green;
+            }
+
+            #charmander-bar {
+                background-color: orange;
+            }
+
+            #eevee-bar {
+                background-color: pink;
+            }
+
+            #squirtle-bar {
+                background-color: blue;
+            }
+    </style>
+</head>
+<body>
+    <div id="left">
+        <img id="background" src="images/environment_forestbackground.png">
+        <img class="grass" id="grass1" src="images/grass.png">
+        <img class="grass" id="grass2" src="images/grass.png">
+        <img class="grass" id="grass3" src="images/grass.png">
+    </div>
+    <div id="right">
+        <h1>Gotta Catch 'em All!</h1>
+        <p>Instructions</p>
+        <h2 id="status">Click a grass</h2>
+        <div id="pokemon_caught_div">Caught: 0</div>
+        <div id="pokeballs_left_div">Pokeballs: 5</div>
+        <button id="play_again_button" style="display: none;">Play Again!</button>
+    </div>
+    <div id = container>
+    <div id="pokedex">
+        <h2>Pokedex</h2>
+        <h2>Pokemon Caught Histogram</h2>
+        <table>
+            <tr>
+                <th>Pokemon Type</th>
+                <th>Caught</th>
+            </tr>
+            <tr>
+                <td>Pikachu</td>
+                <td id="pikachu-caught">0</td>
+                <div class="histogram">
+                    <div class="bar" id="pikachu-bar"></div>
+                </div>
+            </tr>
+            <tr>
+                <td>Bulbasaur</td>
+                <td id="bulbasaur-caught">0</td>
+                <div class="histogram">
+                    <div class="bar" id="bulbasaur-bar"></div>
+                </div>
+            </tr>
+            <tr>
+                <td>Charmander</td>
+                <td id="charmander-caught">0</td>
+                <div class="histogram">
+                    <div class="bar" id="charmander-bar"></div>
+                </div>
+            </tr>
+            <tr>
+                <td>Eevee</td>
+                <td id="eevee-caught">0</td>
+                <div class="histogram">
+                    <div class="bar" id="eevee-bar"></div>
+                </div>
+            </tr>
+            <tr>
+                <td>Squirtle</td>
+                <td id="squirtle-caught">0</td>
+                <div class="histogram">
+                    <div class="bar" id="squirtle-bar"></div>
+                </div>
+            </tr>
+        </table>
+    </div>
+</div>
+   
+<div id="pokedex-message">&nbsp;</div>
+    <script>
+         // set up DOM queries for all the things we plan on using
+        const grass1 = document.getElementById('grass1');
+        const grass2 = document.getElementById('grass2');
+        const grass3 = document.getElementById('grass3');
+        const status = document.getElementById('status');
+        const pokemon_caught_div = document.getElementById('pokemon_caught_div');
+        const pokeballs_left_div = document.getElementById('pokeballs_left_div');
+        const play_again_button = document.getElementById('play_again_button');
+        let pokemonTypes = ['Pikachu', 'Bulbasaur', 'Charmander', 'Eevee', 'Squirtle'];
+        
+       
+        
+            let pokeballsRemaining = 5;
+            let pokemonCaught = 0;
+            
+
+            grass1.onclick = function() {
+                playRound(grass1);
+            };
+
+            
+            grass2.onclick = function() {
+                playRound(grass2);
+            };
+
+            
+            grass3.onclick = function() {
+                playRound(grass3);
+            };
+
+
+            function playRound(grass){
+                let chance = parseInt( Math.random() * 3 ); 
+                const pokemon = [
+                    {name:'Pikachu', image:'images/pikachu.png'}, 
+                    {name:'Bulbasaur', image:'images/bulbasaur.png'},
+                    {name:'Charmander', image:'images/charmander.png'},
+                    {name:'Eevee', image:'images/eevee.png'},
+                    {name:'Squirtle', image:'images/squirtle.png'}
+                ]
+
+                let pokeballsFound = 0;
+                let superItemImg = null;
+                const superItemChance = 5;
+                let isSuperItemMode = false;
+                let superItemRemaining = 1;
+
+               
+                const superItems = [
+                    {name:'masterBall', image: 'images/master-ball.png', value: 5}, 
+                    {name:'rareCandy', image:'images/rare-candy.png', value: 4},
+                    {name:'luckyEgg', image:'images/lucky-egg.png', value: 3}
+                ];
+
+
+                const isSuperItemModeActive = Math.random() * 100 < superItemChance;
+
+                if (isSuperItemModeActive){
+                    const selectedSuperItem = superItems[parseInt(Math.random() * superItems.length)];
+                    grass.src = selectedSuperItem.image;
+                    console.log(grass.src);
+                    pokeballsFound = selectedSuperItem === superItems[0] ? 4 : 0;
+                    pokemonImg = selectedSuperItem === superItems[1] ? pokemon[parseInt(Math.random() * pokemon.length)] : null;
+                    isSuperItemMode = true;
+
+                }
+                else{
+                    isSuperItemMode = false;
+                    pokemonImg = pokemon[Math.floor(Math.random() * pokemon.length)];
+                    grass.src = pokemonImg.image;
+                }
+
+
+                pokeballsRemaining += pokeballsFound;
+                pokemon_caught_div.innerHTML = 'Pokemon Caught: ' + pokemonCaught;
+                pokeballs_left_div.innerHTML = 'Pokeballs: ' + pokeballsRemaining;
+                play_again_button.style.display = 'block';
+                
+                
+
+                if (isSuperItemModeActive && superItemRemaining > 0){
+                    const superItemChance = Math.random();
+                    if (superItemChance < 0.5){
+                        const randomSuperItem = superItems[parseInt(Math.random() * superItems.length)];
+                        grass.src = randomSuperItem.image;
+                        status.innerHTML = "You found a " + randomSuperItem.name + "!";
+                        superItemRemaining--;
+
+                    }
+                    else{
+                        grass.src = '';
+                        pokeballsRemaining -= 1;
+                        status.innerHTML = 'You found no super items';
+                    }
+                }
+                else{
+                    let chance = parseInt(Math.random() * 3);
+                    const pokemon = [
+                        { name: 'Pikachu', image: 'images/pikachu.png' },
+                        { name: 'Bulbasaur', image: 'images/bulbasaur.png' },
+                        { name: 'Charmander', image: 'images/charmander.png' },
+                        { name: 'Eevee', image: 'images/eevee.png' },
+                        { name: 'Squirtle', image: 'images/squirtle.png' }
+                    ];
+                    let pokemonImg = pokemon[parseInt(Math.random() * pokemon.length)];
+                    let foundItem;
+                    if (chance == 0){
+                        foundItem = 'pokeballs';
+                        grass.src = 'images/pokeballs.png';
+                        pokeballsRemaining += 2;
+                        status.innerHTML = 'You found 2 Pokeballs!';
+    
+                    }
+                    else if (chance == 1){
+                        foundItem = 'nothing';
+                        grass.src = '';
+                        pokeballsRemaining -= 1;
+                        status.innerHTML = 'You found nothing!';
+                        
+                    }
+                    else {
+                        foundItem = pokemonImg.name;
+                        grass.src = pokemonImg.image;
+                        pokemonCaught += 1;
+                        status.innerHTML = 'You caught a ' + pokemonImg.name + '!';
+                        updatePokedexAndCounts(pokemonImg.name);
+                    }
+                }
+                if (superItemRemaining > 0 && Math.random() < 0.1){
+                    isSuperItemMode = true;
+                    status.innerHTML = "You're in 'Super Item' mode!";
+                }
+                else{
+                    isSuperItemMode = false;
+                }
+                pokemon_caught_div.innerHTML = 'Pokemon Caught: ' + pokemonCaught;
+                pokeballs_left_div.innerHTML = 'Pokeballs: ' + pokeballsRemaining;
+                play_again_button.style.display = 'block';
+
+                if (pokeballsRemaining <= 0){
+                    alert("Game Over! You ran out of Pokeballs.");
+                    location.reload();
+                }
+
+            }
+
+            
+
+
+            let pokemonCaughtCounts = {
+                    Pikachu: 0,
+                    Bulbasaur: 0,
+                    Charmander: 0,
+                    Eevee: 0,
+                    Squirtle: 0
+                }
+
+                
+            function updatePokedex() {
+                let pokedexMessage = document.getElementById('pokedex-message');
+                let allCaught = true;
+                let tableHTML = '';
+
+                for (let i = 0; i < pokemonTypes.length; i++) {
+                    let pokemonType = pokemonTypes[i];
+                    let pokemonCount = pokemonCaughtCounts[pokemonType];
+                    let pokemonCountHTML = pokemonCount;
+                    if (pokemonCount === 0) {
+                        allCaught = false;
+                        pokemonCountHTML = '<span class="zero-count">' + pokemonCount + '</span>';
+                    }
+                    tableHTML += '<tr><td>' + pokemonType + '</td><td>' + pokemonCountHTML + '</td></tr>';
+                }
+
+                let tableBody = document.getElementById("pokedex").querySelector("tbody");
+                tableBody.innerHTML = tableHTML;
+                
+                
+                
+                if (allCaught){
+                    pokedexMessage.innerHTML = 'Congratulations! You have caught at least one of each Pokemon!';
+                } 
+            }
+
+            function updateHistogram(){
+                for (let pokemon in pokemonCaughtCounts) {
+                    let bar = document.getElementById(pokemon.toLowerCase() + '-bar');
+                    let count = pokemonCaughtCounts[pokemon];
+                    bar.style.width = count * 5 + '%';
+                }
+            }
+
+            function updateCaughtCounts(pokemonName) {
+                if (pokemonName in pokemonCaughtCounts) {
+                    pokemonCaughtCounts[pokemonName]++;
+                    updatePokedex();
+                    updateHistogram();
+                    }
+                }
+                
+
+            function updatePokedexAndCounts(pokemonName) {
+                    updateCaughtCounts(pokemonName);
+                    updatePokedex();
+                }
+                
+
+                
+
+               
+                
+
+            play_again_button.onclick = function() {
+                grass1.src = 'images/grass.png';
+                grass2.src = 'images/grass.png';
+                grass3.src = 'images/grass.png';
+
+                play_again_button.style.display = 'none';
+            }
+
+            
+
+           
+    </script>
+</body>
+</html>

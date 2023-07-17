@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--CSS Styles -->
+    <!-- <link rel="stylesheet" href="assets/css/styles.css"/> -->
+    <style>
+      :root {
+    --variable-name: value;
+    }
+    selector {
+        property: var(--variable-name);
+    }
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,900;1,700&display=swap");
+
+    /* Variables */
+    :root {
+      --font-family: "Roboto", sans-serf;
+      --normal-font: 400;
+      --bold-font: 700;
+      --bolder-font: 900;
+      --bg-color: #fcfcfc;
+      --primary-color: #4756df;
+      --secondary-color: #ff7235;
+      --primary-shadow: #8b8eaf;
+      --secondary-shadow: #a17a69;
+      --bottom-margin: 0.5rem;
+      --bottom-margin-2: 1rem;
+      --line-height: 1.7rem;
+      --transition: 0.3s;
+    }
+    /* Variables end */
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* CSS Resets */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary-color);
+    }
+
+    a:hover {
+      color: var(--secondary-color);
+    }
+
+    body {
+      font-family: var(--font-family);
+    }
+    nav {
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem 3.5rem;
+        background-color: var(--bg-color);
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    }
+    nav h1 {
+        color: var(--primary-color);
+    }
+      
+    nav a {
+        color: var(--primary-color);
+        transition: var(--transition);
+    }
+    nav a:hover {
+        color: var(--secondary-color);
+        border-bottom: 2px solid var(--secondary-color);
+    }
+      
+    nav ul {
+        display: flex;
+        gap: 1.9rem;
+    }
+      
+    nav ul li {
+        font-weight: var(--bold-font);
+    }
+    .burger-menu {
+        color: var(--primary-color);
+        font-size: 2rem;
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
+        display: none;
+    }
+    .hero {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        max-width: 68.75rem;
+        margin: auto;
+    }
+    .hero img {
+        height: 37.5rem;
+        width: 37.5rem;
+    }
+      
+    .bio {
+        width: 25rem;
+        padding: 0.625rem;
+        border-radius: 6px;
+        box-shadow: 0px 2px 15px 2px var(--primary-shadow);
+    }
+      
+    .bio h1 {
+        margin-bottom: var(--bottom-margin);
+    }
+      
+    .bio p {
+        line-height: var(--line-height);
+        padding: 0.3rem 0;
+    }
+    .more-about {
+        background-color: var(--bg-color);
+        padding: 1rem 6rem;
+    }
+      
+    .more-about h2 {
+        margin-bottom: var(--bottom-margin);
+        text-align: center;
+    }
+      
+    .more-about p {
+        line-height: var(--line-height);
+        padding: 0.4rem;
+    }
+    .skills {
+        max-width: 68.75rem;
+        margin: auto;
+        text-align: center;
+        margin-top: 2.5rem;
+    }
+      
+    .skill-header {
+        margin-bottom: 1rem;
+    }
+      
+    .skills-wrapper img {
+        padding: 1.25rem;
+    }
+      
+    .icon {
+        width: 11.875rem;
+        height: 11.25rem;
+    }
+    .icon-card {
+        background-color: #fff;
+        border-radius: 11px;
+        box-shadow: 0 3px 10px var(--secondary-shadow);
+        padding: 20px;
+        margin: 10px;
+    }
+    .projects {
+        background-color: var(--bg-color);
+        padding: 32px 0;
+        margin-top: 2rem;
+      }
+      
+      .project-pic {
+        width: 65%;
+        height: 60%;
+      }
+      
+      .projects-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .projects-title {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      
+      .project-container {
+        text-align: center;
+        width: 21.875rem;
+        padding: 1rem;
+      }
+      .project-container p {
+        padding: 0.4rem;
+      }
+      
+      .project-title {
+        margin-bottom: var(--bottom-margin);
+      }
+      
+      .project-details {
+        margin-bottom: var(--bottom-margin);
+      }
+      
+      .project-card {
+        background-color: #fff;
+        border-radius: 11px;
+        box-shadow: 0 3px 10px var(--primary-shadow);
+        padding: 20px;
+        margin: 10px;
+      }
+      .socials {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        right: 1%;
+        bottom: 50%;
+      }
+      
+      .socicon {
+        width: 2rem;
+        height: 2rem;
+      }
+      .scroll-up {
+        position: fixed;
+        right: 0.5%;
+        bottom: 3%;
+        cursor: pointer;
+      }
+      
+      .up-arrow {
+        width: 3rem;
+        height: 3rem;
+      }
+
+    </style>
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/icons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/icons/favicon-32x32.png"
+    />
+
+    <!-- Animate CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <title>Jane Doe | Web Developer</title>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav>
+        <h1>FATIAH JIMOH</h1>
+        <ul class="navigation">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+        </ul>
+        <button class="burger-menu" id="burger-menu">
+          <ion-icon class="bars" name="menu-outline"></ion-icon>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+        <img
+          src="assets/images/wfh_1.svg"
+          alt="jane-doe"
+          loading="lazy"
+          class="hero-img"
+        />
+        <div class="bio animate__animated animate__shakeX">
+          <h2 class="bio-title">About Me</h2>
+          <p class="bio-text">
+            Hello, I’m Fatiah Jimoh. I am majoring in Computer Science with a minor in web programming at NYU. 
+            I became interested in exploring the creative aspect of technology with art and design. 
+            That led me to choosing Computer Science as my major because of how many career paths in tech.
+          </p>
+        </div>
+    </section>
+
+    <!-- More about -->
+    <section class="more-about">
+      <h2>More About Me</h2>
+      <p>
+        My skills allow me to work very well in a team oriented environment  as well as learning new information. 
+        I'm interested in UX/UI design, web Development  and product management. 
+        I'm passionate about design and tech because being in tech allows me to flourish 
+        in an environment that constantly changes and gives me opportunities to learn from others. 
+      </p>
+      <p>
+       I really love to dance and cook with my family. It brings me so much joy to be around them and know that 
+       I can always depend on them fo anything.
+      </p>
+    </section>
+
+    <!-- Skills section -->
+    <section class="skills" id="skills">
+      <h2 class="skill-header">My Top Skills</h2>
+
+      <div class="skills-wrapper">
+        <div class="first-set animate__animated animate__pulse">
+          <img
+            src="assets/icons/icons8-html-5.svg"
+            alt=""
+            loading="lazy"
+            class="icon icon-card"
+          />
+          <img
+            src="assets/icons/icons8-css3.svg"
+            alt=""
+            loading="lazy"
+            class="icon icon-card"
+          />
+          <img
+            src="assets/icons/icons8-javascript.svg"
+            alt=""
+            loading="lazy"
+            class="icon icon-card"
+          />
+        </div>
+
+        <div class="second-set animate__animated animate__pulse">
+          <img
+            src="assets/icons/icons8-bootstrap.svg"
+            alt=""
+            loading="lazy"
+            class="icon icon-card"
+          />
+          <img
+            src="assets/icons/icons8-python.svg"
+            alt=""
+            loading="lazy"
+            class="icon icon-card"
+          />
+          <img
+            src="assets/icons/icons8-java.svg"
+            alt=""
+            loading="lazy"
+            class="icon icon-card"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects section -->
+    <section class="projects" id="projects">
+      <h2 class="projects-title">Some of my Recent Projects</h2>
+      <div class="projects-container">
+        <div class="project-container project-card">
+          <img
+            src="assets/images/Challenges.png"
+            alt="Challenges"
+            loading="lazy"
+            class="project-pic"
+          />
+          <h3 class="project-title">Harry Potter Challenges</h3>
+          <p class="project-details">
+            I was given four challenges and I had to solve the four challenges using javascript.
+            This helped me understand how to use events and DOM in javascript.
+          </p>
+          <a href="assets/webdev/Assign04/assignment04" target="_blank" class="project-link">Check it Out</a>
+        </div>
+        <div class="project-container project-card">
+          <img
+            src="assets/images/pokemon.png"
+            alt="netflic-clone"
+            loading="lazy"
+            class="project-pic"
+          />
+          <h3 class="project-title">Pokemon Game</h3>
+          <p class="project-details">
+            This is where I create a pokemon game so that the pokemons can hid. 
+            This game is built on being random. I use HTML, CSS, and Javascript.
+          </p>
+          <a href="assets/webdev/Assign03/a3.html" target="_blank" class="project-link">Check it Out</a>
+        </div>
+        <div class="project-container project-card">
+          <img
+            src="assets/images/Design.png"
+            alt="greeny-earth"
+            loading="lazy"
+            class="project-pic"
+          />
+          <h3 class="project-title">Howgrats Design</h3>
+          <p class="project-details">
+            I created a space where people can build their own hogwarts based on the tiles they've choosen.
+            It was a very fun way of using big amount of data to build a game.
+          </p>
+          <a href="assets/webdev/Assign04/assignment04_finalchallenge_template/index.html" target="_blank" class="project-link">Check it Out</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact section -->
+
+    <!-- Social accounts - Fixed to the right -->
+    <div class="socials">
+      <a href="http://www.linkedin.com/in/Fatiah-Jimoh" target="_blank"
+        ><img
+          src="assets/icons/icons8-linkedin-circled.gif"
+          alt="Linkedin"
+          loading="lazy"
+          class="socicon"
+      /></a>
+      <a href="https://github.com" target="_blank"
+        ><img src="assets/icons/icons8-github.gif" alt="Github" class="socicon"
+      /></a>
+
+    <!-- Scroll to top -->
+    <i class="scroll-up" id="scroll-up"
+      ><img
+        src="assets/icons/icons8-upward-arrow.gif"
+        class="socicon up-arrow"
+        alt="scroll-up"
+    /></i>
+
+    <!-- Website scripts -->
+    <script src="assets/js/app.js">
+      // Nav hamburgerburger selections
+      const burger = document.querySelector("#burger-menu");
+      const ul = document.querySelector("nav ul");
+      const nav = document.querySelector("nav");
+
+      // Scroll to top selection
+      const scrollUp = document.querySelector("#scroll-up");
+
+      // Select nav links
+      const navLink = document.querySelectorAll(".nav-link");
+
+      // Hamburger menu function
+      burger.addEventListener("click", () => {
+        ul.classList.toggle("show");
+      });
+
+      // Close hamburger menu when a link is clicked
+      navLink.forEach((link) =>
+        link.addEventListener("click", () => {
+          ul.classList.remove("show");
+        })
+      );
+
+      // scroll to top functionality
+      scrollUp.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        });
+      });
+
+    </script>
+
+    <!-- Ion icons scripts -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>
